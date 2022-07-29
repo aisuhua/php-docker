@@ -22,24 +22,24 @@ RUN add-apt-repository -y ppa:ondrej/php \
 && sed -i "s/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g" /etc/apt/sources.list.d/*.list
 
 RUN apt-get update && apt-get install -y \
-	php7.4 \
+    php7.4 \
     php7.4-cli \
-	php7.4-fpm \
+    php7.4-fpm \
     php7.4-curl \
     php7.4-dom \
     php7.4-fileinfo \
-	php7.4-fpm \
-	php7.4-gd \
-	php7.4-gettext \
-	php7.4-json \
-	php7.4-mbstring \
-	php7.4-pdo \
-	php7.4-phar \
-	php7.4-psr \
-	php7.4-opcache \
-	php7.4-simplexml \
-	php7.4-tokenizer \
-	php7.4-xml \
+    php7.4-fpm \
+    php7.4-gd \
+    php7.4-gettext \
+    php7.4-json \
+    php7.4-mbstring \
+    php7.4-pdo \
+    php7.4-phar \
+    php7.4-psr \
+    php7.4-opcache \
+    php7.4-simplexml \
+    php7.4-tokenizer \
+    php7.4-xml \
     php7.4-bcmath \
     php7.4-zip \
     php7.4-mysqli \
