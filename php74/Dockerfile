@@ -43,6 +43,7 @@ RUN apt-get update && apt-get install -y \
     php7.4-bcmath \
     php7.4-zip \
     php7.4-mysqli \
+    php7.4-sqlite \
     php7.4-soap \
     php7.4-ldap \
     php7.4-iconv \
@@ -87,10 +88,11 @@ RUN sed -i "s/^user = www-data/;user = www-data/" /etc/php/7.4/fpm/pool.d/www.co
 && sed -i "s/post_max_size =.*/post_max_size = 30M/" /etc/php/7.4/cli/php.ini \
 && mkdir /run/php \
 && chmod 775 /run/php \
+&& mkdir /opt/www \
 && chmod 775 /opt
 
 USER 1001
-WORKDIR /opt
+WORKDIR /opt/www
 
 STOPSIGNAL SIGQUIT
 

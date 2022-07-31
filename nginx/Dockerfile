@@ -13,27 +13,28 @@ RUN apk add --no-cache \
     nginx-mod-http-image-filter
 
 RUN mkdir -p \
-        /var/run/nginx \
-        /var/cache/nginx \
-        /var/lib/nginx  
+    /var/run/nginx \
+    /var/cache/nginx \
+    /var/lib/nginx \
+    /opt/www \
+&& chown -R 0:0 \
+    /etc/nginx \
+    /var/run/nginx \
+    /var/cache/nginx \
+    /var/lib/nginx \
+    /opt/www \
+&& chmod -R 775 \
+    /etc/nginx \
+    /var/run/nginx \
+    /var/cache/nginx \
+    /var/lib/nginx \
+    /opt/www \
+&& ln -sf /dev/stdout /var/log/nginx/access.log \
+&& ln -sf /dev/stderr /var/log/nginx/error.log
 
-RUN chown -R 0:0 \
-        /etc/nginx \
-        /var/run/nginx \
-        /var/cache/nginx \
-        /var/lib/nginx \
-    && chmod -R 775 \
-        /etc/nginx \
-        /var/run/nginx \
-        /var/cache/nginx \
-        /var/lib/nginx \
-        /opt \
-    && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log
+USER 1001
 
-USER 10001
-
-WORKDIR /opt
+WORKDIR /opt/www
 
 EXPOSE 80
 
