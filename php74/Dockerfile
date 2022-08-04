@@ -64,6 +64,7 @@ RUN apt-get update && apt-get install -y \
     php7.4-amqp \
     php7.4-xdebug \
     php7.4-phalcon \
+    php7.4-snmp \
 && rm -rf /var/lib/apt/lists/*
 
 RUN wget https://mirrors.cloud.tencent.com/composer/composer.phar && \
@@ -83,6 +84,7 @@ RUN sed -i "s/^user = www-data/;user = www-data/" /etc/php/7.4/fpm/pool.d/www.co
 && sed -i "s/;date.timezone =.*/date.timezone = PRC/" /etc/php/7.4/fpm/php.ini \
 && sed -i "s/upload_max_filesize =.*/upload_max_filesize = 30M/" /etc/php/7.4/fpm/php.ini \
 && sed -i "s/post_max_size =.*/post_max_size = 30M/" /etc/php/7.4/fpm/php.ini \
+&& sed -i "s/disable_functions = .*/;disable_functions = /" /etc/php/7.4/fpm/php.ini \
 && sed -i "s/;date.timezone =.*/date.timezone = PRC/" /etc/php/7.4/cli/php.ini \
 && sed -i "s/upload_max_filesize =.*/upload_max_filesize = 30M/" /etc/php/7.4/cli/php.ini \
 && sed -i "s/post_max_size =.*/post_max_size = 30M/" /etc/php/7.4/cli/php.ini \
