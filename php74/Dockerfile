@@ -65,6 +65,7 @@ RUN apt-get update && apt-get install -y \
     php7.4-xdebug \
     php7.4-phalcon \
     php7.4-snmp \
+    php7.4-gmp \
 && rm -rf /var/lib/apt/lists/*
 
 RUN wget https://mirrors.cloud.tencent.com/composer/composer.phar && \
