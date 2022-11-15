@@ -94,6 +94,11 @@ RUN sed -i "s/^user = www-data/;user = www-data/" /etc/php/7.4/fpm/pool.d/www.co
 && mkdir /opt/www \
 && chmod 775 /opt
 
+# install ansible
+RUN apt-get update \
+&& apt-get install -y ansible \
+&& rm -rf /var/lib/apt/lists/*
+
 USER 1001
 WORKDIR /opt/www
 

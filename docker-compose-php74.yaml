@@ -1,11 +1,11 @@
 version: '3.9'
 
 services:
-  php80:
+  php74:
     build:
-      context: ./php80
-    image: php:80
-    container_name: php80
+      context: ./php74
+    image: php:74
+    container_name: php74
     restart: always
     volumes: 
       - /opt/www:/opt/www
