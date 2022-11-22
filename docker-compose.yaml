@@ -30,6 +30,7 @@ services:
       - $PWD/nginx/config/http.d:/etc/nginx/http.d
       - $PWD/nginx/config/stream.d:/etc/nginx/stream.d
       - $PWD/nginx/config/ssl:/etc/nginx/ssl
+      - $PWD/nginx/config/htpasswd:/etc/nginx/htpasswd
     ports:
       - 80:80
       - 443:443
@@ -53,5 +54,3 @@ services:
       ]
     cap_add:
       - SYS_NICE
-
-
