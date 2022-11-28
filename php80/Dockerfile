@@ -82,12 +82,14 @@ RUN sed -i "s/^user = www-data/;user = www-data/" /etc/php/8.0/fpm/pool.d/www.co
 && sed -i "s/listen = .*/listen = 127.0.0.1:9000/" /etc/php/8.0/fpm/pool.d/www.conf \
 && sed -i "s/;pm.status_path = .*/pm.status_path = \/8fpm_status/" /etc/php/8.0/fpm/pool.d/www.conf \
 && sed -i "s/;date.timezone =.*/date.timezone = PRC/" /etc/php/8.0/fpm/php.ini \
-&& sed -i "s/upload_max_filesize =.*/upload_max_filesize = 30M/" /etc/php/8.0/fpm/php.ini \
-&& sed -i "s/post_max_size =.*/post_max_size = 30M/" /etc/php/8.0/fpm/php.ini \
+&& sed -i "s/upload_max_filesize =.*/upload_max_filesize = 1024M/" /etc/php/8.0/fpm/php.ini \
+&& sed -i "s/post_max_size =.*/post_max_size = 1024M/" /etc/php/8.0/fpm/php.ini \
+&& sed -i "s/memory_limit = .*/memory_limit = 1024M/" /etc/php/8.0/fpm/php.ini \
 && sed -i "s/disable_functions = .*/;disable_functions = /" /etc/php/8.0/fpm/php.ini \
 && sed -i "s/;date.timezone =.*/date.timezone = PRC/" /etc/php/8.0/cli/php.ini \
-&& sed -i "s/upload_max_filesize =.*/upload_max_filesize = 30M/" /etc/php/8.0/cli/php.ini \
-&& sed -i "s/post_max_size =.*/post_max_size = 30M/" /etc/php/8.0/cli/php.ini \
+&& sed -i "s/upload_max_filesize =.*/upload_max_filesize = 1024m/" /etc/php/8.0/cli/php.ini \
+&& sed -i "s/post_max_size =.*/post_max_size = 1024m/" /etc/php/8.0/cli/php.ini \
+&& sed -i "s/memory_limit = .*/memory_limit = 1024M/" /etc/php/8.0/cli/php.ini \
 && mkdir /run/php \
 && chmod 775 /run/php \
 && mkdir /opt/www \
@@ -95,7 +97,7 @@ RUN sed -i "s/^user = www-data/;user = www-data/" /etc/php/8.0/fpm/pool.d/www.co
 
 # install ansible
 RUN apt-get update \
-&& apt-get install -y ansible \
+&& apt-get install -y ansible imagemagick \
 && rm -rf /var/lib/apt/lists/*
 
 USER 1001

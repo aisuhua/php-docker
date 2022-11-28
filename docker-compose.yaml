@@ -17,6 +17,8 @@ services:
       - php80
     volumes: 
       - /opt/www:/opt/www
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
   nginx:
     build:
       context: ./nginx
@@ -31,6 +33,8 @@ services:
       - $PWD/nginx/config/stream.d:/etc/nginx/stream.d
       - $PWD/nginx/config/ssl:/etc/nginx/ssl
       - $PWD/nginx/config/htpasswd:/etc/nginx/htpasswd
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 80:80
       - 443:443
@@ -46,6 +50,8 @@ services:
       - php80
     volumes:
       - mysql_data:/var/lib/mysql
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     command:
       [
         "mysqld",
