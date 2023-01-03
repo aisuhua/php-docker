@@ -13,6 +13,7 @@ services:
       context: ./php80
     image: php:80
     restart: always
+    user: "${UID}:${GID}"
     networks:
       - php80
     volumes: 
@@ -24,6 +25,7 @@ services:
       context: ./nginx
     image: nginx:1.22
     restart: always
+    user: "${UID}:${GID}"
     networks:
       - php80
     volumes: 
