@@ -62,7 +62,7 @@ RUN apt-get update && apt-get install -y \
     php8.0-redis \
     php8.0-amqp \
     php8.0-xdebug \
-    php-phalcon4 \
+    php8.0-phalcon5 \
     php8.0-snmp \
     php8.0-gmp \
 && rm -rf /var/lib/apt/lists/*
