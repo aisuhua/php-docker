@@ -83,6 +83,9 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 && mkdir /opt/www \
 && chmod 775 /opt
 
+COPY php80/docker-entrypoint.sh /
+ENTRYPOINT ["sh", "/docker-entrypoint.sh"]
+
 USER 1001
 WORKDIR /opt/www
 
