@@ -4,7 +4,7 @@ LABEL maintainer="aisuhua <1079087531@qq.com>"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ADD sources.list /etc/apt/sources.list
+ADD snippets/sources.list /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y \
     software-properties-common \
@@ -12,11 +12,11 @@ RUN apt-get update && apt-get install -y \
     tzdata \
     locales \
     vim \
+    net-tools \
     curl \
     wget \
-&& cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-&& echo Asia/Shanghai | tee /etc/timezone \
-&& rm -rf /var/lib/apt/lists/*
+    ansible \
+    imagemagick
 
 RUN add-apt-repository -y ppa:ondrej/php \
 && sed -i "s/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g" /etc/apt/sources.list.d/*.list
@@ -65,40 +65,23 @@ RUN apt-get update && apt-get install -y \
     php8.0-phalcon5 \
     php8.0-snmp \
     php8.0-gmp \
+&& apt-get remove --purge --auto-remove -y \
 && rm -rf /var/lib/apt/lists/*
 
-RUN wget https://mirrors.cloud.tencent.com/composer/composer.phar && \
-    mv composer.phar /usr/local/bin/composer && \
-    chmod 755 /usr/local/bin/composer && \
-    composer config -g repo.packagist composer https://mirrors.cloud.tencent.com/composer/
+RUN wget https://mirrors.cloud.tencent.com/composer/composer.phar \
+&& mv composer.phar /usr/local/bin/composer \
+&& chmod 755 /usr/local/bin/composer \
+&& composer config -g repo.packagist composer https://mirrors.cloud.tencent.com/composer/
 
-COPY docker.conf /etc/php/8.0/fpm/pool.d/
-COPY zz-docker.conf /etc/php/8.0/fpm/pool.d/
-
-RUN sed -i "s/^user = www-data/;user = www-data/" /etc/php/8.0/fpm/pool.d/www.conf \
-&& sed -i "s/^group = www-data/;group = www-data/" /etc/php/8.0/fpm/pool.d/www.conf \
-&& sed -i "s/^listen.owner = www-data/;listen.owner = www-data/" /etc/php/8.0/fpm/pool.d/www.conf \
-&& sed -i "s/^listen.group = www-data/;listen.group = www-data/" /etc/php/8.0/fpm/pool.d/www.conf \
-&& sed -i "s/listen = .*/listen = 127.0.0.1:9000/" /etc/php/8.0/fpm/pool.d/www.conf \
-&& sed -i "s/;pm.status_path = .*/pm.status_path = \/8fpm_status/" /etc/php/8.0/fpm/pool.d/www.conf \
-&& sed -i "s/;date.timezone =.*/date.timezone = PRC/" /etc/php/8.0/fpm/php.ini \
-&& sed -i "s/upload_max_filesize =.*/upload_max_filesize = 1024M/" /etc/php/8.0/fpm/php.ini \
-&& sed -i "s/post_max_size =.*/post_max_size = 1024M/" /etc/php/8.0/fpm/php.ini \
-&& sed -i "s/memory_limit = .*/memory_limit = 1024M/" /etc/php/8.0/fpm/php.ini \
-&& sed -i "s/disable_functions = .*/;disable_functions = /" /etc/php/8.0/fpm/php.ini \
-&& sed -i "s/;date.timezone =.*/date.timezone = PRC/" /etc/php/8.0/cli/php.ini \
-&& sed -i "s/upload_max_filesize =.*/upload_max_filesize = 1024m/" /etc/php/8.0/cli/php.ini \
-&& sed -i "s/post_max_size =.*/post_max_size = 1024m/" /etc/php/8.0/cli/php.ini \
-&& sed -i "s/memory_limit = .*/memory_limit = 1024M/" /etc/php/8.0/cli/php.ini \
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+&& echo Asia/Shanghai | tee /etc/timezone \
+&& cp /etc/php/8.0/fpm/pool.d/www.conf /etc/php/8.0/fpm/pool.d/www.conf.default \
+&& cp /etc/php/8.0/fpm/php.ini /etc/php/8.0/fpm/php.ini.default \
+&& cp /etc/php/8.0/cli/php.ini /etc/php/8.0/cli/php.ini.default \
 && mkdir /run/php \
 && chmod 775 /run/php \
 && mkdir /opt/www \
 && chmod 775 /opt
-
-# install ansible
-RUN apt-get update \
-&& apt-get install -y ansible imagemagick \
-&& rm -rf /var/lib/apt/lists/*
 
 USER 1001
 WORKDIR /opt/www
