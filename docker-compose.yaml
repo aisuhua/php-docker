@@ -4,9 +4,6 @@ networks:
   php:
     external: false
 
-volumes:
-  mysql_data:
-
 services:
   php80:
     build:
@@ -63,25 +60,3 @@ services:
     ports:
       - 80:8080
       - 443:8443
-  mysql:
-    image: mysql:8.0.29
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=suhua123
-      - MYSQL_USER=test
-      - MYSQL_PASSWORD=suhua123
-      - MYSQL_DATABASE=test
-    networks:
-      - php
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    command:
-      [
-        "mysqld",
-        "--character-set-server=utf8mb4",
-        "--collation-server=utf8mb4_unicode_ci"
-      ]
-    cap_add:
-      - SYS_NICE
