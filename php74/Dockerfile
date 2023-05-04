@@ -63,7 +63,7 @@ RUN apt-get update && apt-get install -y \
     php7.4-redis \
     php7.4-amqp \
     php7.4-xdebug \
-    php-phalcon3 \
+    php7.4-phalcon4 \
     php7.4-snmp \
     php7.4-gmp \
 && apt-get remove --purge --auto-remove -y \
