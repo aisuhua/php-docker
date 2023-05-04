@@ -11,16 +11,16 @@ services:
       dockerfile: ./php80/Dockerfile
     image: php:80
     restart: always
-    user: "${UID}:${GID}"
+    user: "${USERID:-1001}:${GID:-0}"
     networks:
       - php
     volumes: 
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - ./php80/fpm/php.ini:/etc/php/8.0/fpm/php.ini
-      - ./php80/cli/php.ini:/etc/php/8.0/cli/php.ini
-      - ./php80/fpm/docker.conf:/etc/php/8.0/fpm/pool.d/docker.conf
-      - ./php80/fpm/zz-docker.conf:/etc/php/8.0/fpm/pool.d/zz-docker.conf
+      - ./conf/php80/fpm/php.ini:/etc/php/8.0/fpm/php.ini
+      - ./conf/php80/cli/php.ini:/etc/php/8.0/cli/php.ini
+      - ./conf/php80/fpm/docker.conf:/etc/php/8.0/fpm/pool.d/docker.conf
+      - ./conf/php80/fpm/zz-docker.conf:/etc/php/8.0/fpm/pool.d/zz-docker.conf
       - /opt/www:/opt/www
     working_dir: /opt/www
   php74:
@@ -29,34 +29,15 @@ services:
       dockerfile: ./php74/Dockerfile
     image: php:74
     restart: always
-    user: "${UID}:${GID}"
+    user: "${USERID:-1001}:${GID:-0}"
     networks:
       - php
     volumes: 
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - ./php74/fpm/php.ini:/etc/php/7.4/fpm/php.ini
-      - ./php74/cli/php.ini:/etc/php/7.4/cli/php.ini
-      - ./php74/fpm/docker.conf:/etc/php/7.4/fpm/pool.d/docker.conf
-      - ./php74/fpm/zz-docker.conf:/etc/php/7.4/fpm/pool.d/zz-docker.conf
+      - ./conf/php74/fpm/php.ini:/etc/php/7.4/fpm/php.ini
+      - ./conf/php74/cli/php.ini:/etc/php/7.4/cli/php.ini
+      - ./conf/php74/fpm/docker.conf:/etc/php/7.4/fpm/pool.d/docker.conf
+      - ./conf/php74/fpm/zz-docker.conf:/etc/php/7.4/fpm/pool.d/zz-docker.conf
       - /opt/www:/opt/www
     working_dir: /opt/www
-  nginx:
-    image: nginxinc/nginx-unprivileged:1.23.4
-    restart: always
-    user: "${UID}:${GID}"
-    networks:
-      - php
-    volumes: 
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - "./nginx/${IDC_NAME:-dev}/http.d:/etc/nginx/http.d"
-      - "./nginx/${IDC_NAME:-dev}/stream.d:/etc/nginx/stream.d"
-      - "./nginx/${IDC_NAME:-dev}/ssl:/etc/nginx/ssl"
-      - "./nginx/${IDC_NAME:-dev}/htpasswd:/etc/nginx/htpasswd"
-      - /opt/www:/opt/www
-    working_dir: /etc/nginx
-    ports:
-      - 80:8080
-      - 443:8443
