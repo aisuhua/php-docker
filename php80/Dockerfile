@@ -91,7 +91,7 @@ WORKDIR /opt/www
 
 STOPSIGNAL SIGQUIT
 
-EXPOSE 9000
+EXPOSE 9000 9001
 CMD ["php-fpm8.0"]
 #ENTRYPOINT ["tail"]
 #CMD ["-f","/dev/null"]
