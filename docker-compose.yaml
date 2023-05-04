@@ -25,6 +25,7 @@ services:
       - ./php80/fpm/docker.conf:/etc/php/8.0/fpm/pool.d/docker.conf
       - ./php80/fpm/zz-docker.conf:/etc/php/8.0/fpm/pool.d/zz-docker.conf
       - /opt/www:/opt/www
+    working_dir: /opt/www
   php74:
     build:
       context: ./
@@ -42,6 +43,7 @@ services:
       - ./php74/fpm/docker.conf:/etc/php/7.4/fpm/pool.d/docker.conf
       - ./php74/fpm/zz-docker.conf:/etc/php/7.4/fpm/pool.d/zz-docker.conf
       - /opt/www:/opt/www
+    working_dir: /opt/www
   nginx:
     image: nginxinc/nginx-unprivileged:1.23.4
     restart: always
@@ -51,15 +53,16 @@ services:
     volumes: 
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - $PWD/nginx/http.d:/etc/nginx/http.d
-      - $PWD/nginx/stream.d:/etc/nginx/stream.d
-      - $PWD/nginx/ssl:/etc/nginx/ssl
-      - $PWD/nginx/htpasswd:/etc/nginx/htpasswd
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - "./nginx/${IDC_NAME:-dev}/http.d:/etc/nginx/http.d"
+      - "./nginx/${IDC_NAME:-dev}/stream.d:/etc/nginx/stream.d"
+      - "./nginx/${IDC_NAME:-dev}/ssl:/etc/nginx/ssl"
+      - "./nginx/${IDC_NAME:-dev}/htpasswd:/etc/nginx/htpasswd"
       - /opt/www:/opt/www
+    working_dir: /etc/nginx
     ports:
-      - 80:80
-      - 443:443
+      - 80:8080
+      - 443:8443
   mysql:
     image: mysql:8.0.29
     restart: always
