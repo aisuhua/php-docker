@@ -1,4 +1,4 @@
 #!/bin/bash
 
-source $(dirname "$0")/init.sh
+source ./init.sh
 docker-compose restart

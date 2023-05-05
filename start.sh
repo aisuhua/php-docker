@@ -1,4 +1,5 @@
 #!/bin/bash
 
-source $(dirname "$0")/init.sh
-docker-compose up -d
+source ./init.sh
+
+docker-compose --env-file $ENV_FILE up -d
