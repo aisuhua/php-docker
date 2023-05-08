@@ -85,7 +85,7 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 && mkdir /opt/www \
 && chmod 775 /opt
 
-
+# https://github.com/atmoz/sftp/commit/9c6eb313586bf8b3ae763fa0f1aea4599a87b8fb
 RUN useradd -rm -d /home/random -s /bin/bash -G root -u 1001 random \
 && chmod 775 /etc/ssh /home /var/run \
 && chmod 660 /etc/ssh/sshd_config \
