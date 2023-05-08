@@ -11,7 +11,7 @@ mkdir -p /home/random/.ssh
 cp /ssh/* /home/random/.ssh/
 chmod 700 /home/random/.ssh
 chmod 600 /home/random/.ssh/id_rsa /home/random/.ssh/authorized_keys
-ssh-keygen -y -f /home/random/.ssh/id_rsa > /home/random/.ssh/id_rsa.pub
+chmod 644 /home/random/.ssh/id_rsa.pub
 ssh-keygen -A > /dev/null
 /usr/sbin/sshd
 
