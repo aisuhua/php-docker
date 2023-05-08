@@ -16,7 +16,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     ansible \
-    imagemagick
+    imagemagick \
+    openssh-client \
+    openssh-server
 
 RUN add-apt-repository -y ppa:ondrej/php \
 && sed -i "s/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g" /etc/apt/sources.list.d/*.list
@@ -82,6 +84,15 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 && chmod 775 /run/php \
 && mkdir /opt/www \
 && chmod 775 /opt
+
+
+RUN useradd -rm -d /home/random -s /bin/bash -G root -u 1001 random \
+&& chmod 775 /etc/ssh /home /var/run \
+&& chmod 660 /etc/ssh/sshd_config \
+&& chmod 664 /etc/passwd /etc/group \
+&& chmod 640 /etc/ssh/ssh_host_rsa_key \
+&& sed -i "s/#PasswordAuthentication yes/PasswordAuthentication no/" /etc/ssh/sshd_config \
+&& sed -i 's/#Port.*$/Port 2022/' /etc/ssh/sshd_config
 
 COPY php80/docker-entrypoint.sh /
 ENTRYPOINT ["sh", "/docker-entrypoint.sh"]
